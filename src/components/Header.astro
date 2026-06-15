@@ -1,0 +1,187 @@
+---
+import LanguagePicker from "@components/LanguagePicker.astro";
+import { ui } from "@i18n/ui";
+import { profile } from "@data/profile";
+import type { Lang } from "@i18n/utils";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+
+const navItems = [
+    { id: "about", label: t("nav.about") },
+    { id: "projects", label: t("nav.projects") },
+    { id: "experience", label: t("nav.experience") },
+    { id: "skills", label: t("nav.skills") },
+    { id: "contact", label: t("nav.contact") },
+];
+---
+
+<header
+    id="site-header"
+    class="fixed inset-x-0 top-0 z-40 transition-transform duration-300 will-change-transform"
+>
+    <div class="mx-auto mt-3 max-w-6xl px-4">
+        <div
+            id="header-bar"
+            class="flex items-center justify-between gap-3 rounded-m3-xl border border-transparent px-3 py-2.5 transition-all duration-300 sm:px-4"
+        >
+            <a
+                href={lang === "es" ? "/es/" : "/"}
+                class="state-layer flex items-center gap-2 rounded-m3-lg px-2 py-1 font-display font-bold tracking-tight text-on-surface"
+                aria-label={profile.alias}
+            >
+                <span
+                    class="grid h-8 w-8 place-items-center rounded-m3-md bg-primary font-bold text-on-primary"
+                >F</span>
+                <span class="hidden sm:inline">FeryaelJustice<span class="text-primary">.dev</span></span>
+            </a>
+
+            <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+                {
+                    navItems.map((item) => (
+                        <a
+                            href={`#${item.id}`}
+                            data-nav={item.id}
+                            class="state-layer rounded-m3-lg px-3 py-1.5 text-sm text-on-surface-variant transition hover:text-on-surface"
+                        >
+                            {item.label}
+                        </a>
+                    ))
+                }
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <LanguagePicker lang={lang} />
+                <a
+                    href={profile.cv[lang]}
+                    target="_blank"
+                    rel="noopener"
+                    class="state-layer hidden rounded-m3-xl bg-primary px-4 py-1.5 text-sm font-semibold text-on-primary transition hover:shadow-lg hover:shadow-primary/20 sm:inline-flex"
+                >
+                    {t("cv")}
+                </a>
+                <button
+                    id="menu-toggle"
+                    type="button"
+                    aria-label={t("nav.menu")}
+                    aria-expanded="false"
+                    class="state-layer grid h-9 w-9 place-items-center rounded-m3-lg border border-outline-variant text-on-surface md:hidden"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M4 7h16M4 12h16M4 17h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <nav
+            id="mobile-menu"
+            aria-label="Mobile"
+            class="mt-2 hidden flex-col gap-1 rounded-m3-xl border border-outline-variant bg-surface-2/95 p-2 backdrop-blur-xl md:hidden"
+        >
+            {
+                navItems.map((item) => (
+                    <a
+                        href={`#${item.id}`}
+                        data-mobile-link
+                        class="state-layer rounded-m3-lg px-3 py-2.5 text-on-surface-variant transition hover:text-on-surface"
+                    >
+                        {item.label}
+                    </a>
+                ))
+            }
+            <a
+                href={profile.cv[lang]}
+                target="_blank"
+                rel="noopener"
+                class="state-layer mt-1 rounded-m3-lg bg-primary px-3 py-2.5 text-center font-semibold text-on-primary"
+            >
+                {t("cv")}
+            </a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    const header = document.getElementById("site-header");
+    const bar = document.getElementById("header-bar");
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    const navLinks = Array.from(
+        document.querySelectorAll<HTMLAnchorElement>("[data-nav]"),
+    );
+
+    // Frosted bar after scroll + hide on scroll-down
+    let lastY = window.scrollY;
+    const onScroll = () => {
+        const y = window.scrollY;
+        if (bar) {
+            if (y > 16) {
+                bar.classList.add(
+                    "border-outline-variant",
+                    "bg-surface-2/80",
+                    "backdrop-blur-xl",
+                    "shadow-lg",
+                    "shadow-black/20",
+                );
+            } else {
+                bar.classList.remove(
+                    "border-outline-variant",
+                    "bg-surface-2/80",
+                    "backdrop-blur-xl",
+                    "shadow-lg",
+                    "shadow-black/20",
+                );
+            }
+        }
+        if (header) {
+            if (y > lastY && y > 240) {
+                header.style.transform = "translateY(-130%)";
+            } else {
+                header.style.transform = "translateY(0)";
+            }
+        }
+        lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Mobile menu toggle
+    toggle?.addEventListener("click", () => {
+        const open = menu?.classList.toggle("hidden");
+        toggle.setAttribute("aria-expanded", String(open === false));
+        menu?.classList.toggle("flex", open === false);
+    });
+    document.querySelectorAll("[data-mobile-link]").forEach((l) =>
+        l.addEventListener("click", () => {
+            menu?.classList.add("hidden");
+            menu?.classList.remove("flex");
+            toggle?.setAttribute("aria-expanded", "false");
+        }),
+    );
+
+    // Active section highlight
+    const sections = navLinks
+        .map((l) => document.getElementById(l.dataset.nav!))
+        .filter(Boolean) as HTMLElement[];
+    const setActive = (id: string) => {
+        navLinks.forEach((l) => {
+            const on = l.dataset.nav === id;
+            l.classList.toggle("text-on-surface", on);
+            l.classList.toggle("bg-surface-3", on);
+            l.classList.toggle("text-on-surface-variant", !on);
+        });
+    };
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) setActive(e.target.id);
+            });
+        },
+        { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((s) => observer.observe(s));
+</script>

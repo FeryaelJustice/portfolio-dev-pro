@@ -1,0 +1,75 @@
+---
+import Reveal from "@components/react/Reveal.tsx";
+import { ui } from "@i18n/ui";
+import { profile } from "@data/profile";
+import type { Lang } from "@i18n/utils";
+
+import Github from "@components/icons/Github.astro";
+import Linkedin from "@components/icons/Linkedin.astro";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+---
+
+<section id="contact" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+    <Reveal client:visible>
+        <div
+            class="relative overflow-hidden rounded-m3-2xl border border-outline-variant bg-surface-2 px-6 py-14 text-center sm:px-12 lg:py-20"
+        >
+            <div
+                aria-hidden
+                class="pointer-events-none absolute inset-0 -z-10 opacity-70"
+                style="background: radial-gradient(60% 80% at 50% 0%, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 70%);"
+            >
+            </div>
+
+            <span
+                class="inline-flex items-center gap-2 rounded-m3-xl border border-outline-variant bg-surface-3/60 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary"
+            >
+                <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                {t("contact.eyebrow")}
+            </span>
+
+            <h2
+                class="mx-auto mt-5 max-w-2xl text-balance text-3xl font-bold tracking-tight text-on-surface sm:text-4xl lg:text-5xl"
+            >
+                {t("contact.title")}
+            </h2>
+            <p class="mx-auto mt-4 max-w-xl text-pretty text-on-surface-variant sm:text-lg">
+                {t("contact.subtitle")}
+            </p>
+
+            <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+                <a
+                    href={`mailto:${profile.email}`}
+                    class="state-layer inline-flex items-center gap-2 rounded-m3-xl bg-primary px-7 py-3.5 font-semibold text-on-primary transition hover:shadow-lg hover:shadow-primary/25"
+                >
+                    {t("contact.cta")}
+                </a>
+                <a
+                    href={profile.socials.github}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="GitHub"
+                    class="state-layer grid h-12 w-12 place-items-center rounded-m3-xl border border-outline-variant text-on-surface-variant transition hover:text-on-surface"
+                >
+                    <Github class="size-5" />
+                </a>
+                <a
+                    href={profile.socials.linkedin}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="LinkedIn"
+                    class="state-layer grid h-12 w-12 place-items-center rounded-m3-xl border border-outline-variant text-on-surface-variant transition hover:text-on-surface"
+                >
+                    <Linkedin class="size-5" />
+                </a>
+            </div>
+
+            <p class="mt-6 font-mono text-sm text-on-surface-variant">{profile.email}</p>
+        </div>
+    </Reveal>
+</section>

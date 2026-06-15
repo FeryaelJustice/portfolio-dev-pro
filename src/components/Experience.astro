@@ -1,0 +1,106 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Reveal from "@components/react/Reveal.tsx";
+import { ui } from "@i18n/ui";
+import { experience } from "@data/experience";
+import type { Lang } from "@i18n/utils";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+
+const totalMonths = experience.reduce((sum, exp) => {
+    const [sy, sm] = exp.start.split("-").map(Number);
+    const [ey, em] = exp.end.split("-").map(Number);
+    return sum + (ey - sy) * 12 + (em - sm) + 1;
+}, 0);
+const halfYears = Math.round(totalMonths / 6);
+const fullYears = Math.floor(halfYears / 2);
+const hasHalf = halfYears % 2 === 1;
+
+let totalLabel: string;
+if (lang === "es") {
+    if (fullYears === 0) {
+        totalLabel = "~6 meses";
+    } else if (hasHalf) {
+        totalLabel = `~${fullYears} año${fullYears !== 1 ? "s" : ""} y medio`;
+    } else {
+        totalLabel = `~${fullYears} año${fullYears !== 1 ? "s" : ""}`;
+    }
+} else {
+    if (fullYears === 0) {
+        totalLabel = "~6 months";
+    } else if (hasHalf) {
+        totalLabel = `~${fullYears}.5 years`;
+    } else {
+        totalLabel = `~${fullYears} year${fullYears !== 1 ? "s" : ""}`;
+    }
+}
+---
+
+<section
+    id="experience"
+    class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28"
+>
+    <SectionHeader
+        eyebrow={t("experience.eyebrow")}
+        title={t("experience.title")}
+    />
+
+    <p class="mt-6 font-mono text-sm text-on-surface-variant">
+        <span class="text-primary font-bold">{totalLabel}</span>
+        {
+            lang === "es"
+                ? " de experiencia profesional"
+                : " of professional experience"
+        }
+    </p>
+
+    <ol class="relative mt-12 max-w-3xl border-s border-outline-variant ps-8">
+        {
+            experience.map((exp, i) => (
+                <Reveal
+                    client:visible
+                    as="li"
+                    delay={i * 0.06}
+                    className="relative mb-10 last:mb-0"
+                >
+                    <span
+                        class="absolute inset-s-[-2.55rem] mt-1.5 grid h-5 w-5 place-items-center rounded-full border-2 border-bg bg-primary"
+                        aria-hidden="true"
+                    >
+                        <span class="h-1.5 w-1.5 rounded-full bg-on-primary" />
+                    </span>
+                    <div class="rounded-m3-xl border border-outline-variant bg-surface-2 p-5 transition hover:border-primary/40 sm:p-6">
+                        <p class="font-mono text-xs uppercase tracking-wide text-primary">
+                            {exp.date[lang]}
+                        </p>
+                        <h3 class="mt-2 font-display text-xl font-bold text-on-surface">
+                            {exp.role}
+                        </h3>
+                        <a
+                            href={exp.link}
+                            target="_blank"
+                            rel="noopener"
+                            class="text-sm font-medium text-on-surface-variant underline-offset-4 hover:text-primary hover:underline"
+                        >
+                            {exp.company}
+                        </a>
+                        <p class="mt-3 text-pretty text-sm leading-relaxed text-on-surface-variant">
+                            {exp.description[lang]}
+                        </p>
+                        <ul class="mt-4 flex flex-wrap gap-1.5">
+                            {exp.tags.map((tag) => (
+                                <li class="rounded-m3-sm bg-surface-4 px-2.5 py-1 text-xs text-on-surface-variant">
+                                    {tag}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </Reveal>
+            ))
+        }
+    </ol>
+</section>

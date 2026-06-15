@@ -1,0 +1,91 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Reveal from "@components/react/Reveal.tsx";
+import { ui } from "@i18n/ui";
+import { skillGroups } from "@data/skills";
+import type { Lang } from "@i18n/utils";
+
+import Kotlin from "@components/icons/Kotlin.astro";
+import Android from "@components/icons/Android.astro";
+import Swift from "@components/icons/Swift.astro";
+import Code from "@components/icons/Code.astro";
+import ReactIcon from "@components/icons/React.astro";
+import NextJS from "@components/icons/NextJS.astro";
+import AstroIcon from "@components/icons/AstroIcon.astro";
+import TailwindCSS from "@components/icons/TailwindCSS.astro";
+import JSIcon from "@components/icons/JSIcon.astro";
+import ExpressJSIcon from "@components/icons/ExpressJSIcon.astro";
+import AIIcon from "@components/icons/AIIcon.astro";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+
+const ICONS: Record<string, any> = {
+    Kotlin,
+    Android,
+    Swift,
+    Code,
+    React: ReactIcon,
+    NextJS,
+    Astro: AstroIcon,
+    TailwindCSS,
+    JS: JSIcon,
+    Express: ExpressJSIcon,
+    AI: AIIcon,
+};
+
+const accentRing: Record<string, string> = {
+    primary: "hover:border-primary/50 hover:text-on-surface",
+    tertiary: "hover:border-tertiary/50 hover:text-on-surface",
+    secondary: "hover:border-secondary/50 hover:text-on-surface",
+};
+const accentDot: Record<string, string> = {
+    primary: "bg-primary",
+    tertiary: "bg-tertiary",
+    secondary: "bg-secondary",
+};
+---
+
+<section id="skills" class="scroll-mt-24 border-y border-outline-variant/40 bg-surface-1/40">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
+        <SectionHeader
+            eyebrow={t("skills.eyebrow")}
+            title={t("skills.title")}
+            subtitle={t("skills.subtitle")}
+        />
+
+        <div class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {
+                skillGroups.map((group, i) => (
+                    <Reveal client:visible delay={i * 0.06}>
+                        <div class="h-full rounded-m3-xl border border-outline-variant bg-surface-2 p-6">
+                            <h3 class="flex items-center gap-2 font-display text-lg font-bold text-on-surface">
+                                <span class:list={["h-2 w-2 rounded-full", accentDot[group.accent]]} />
+                                {group.category[lang]}
+                            </h3>
+                            <ul class="mt-5 flex flex-wrap gap-2">
+                                {group.skills.map((skill) => {
+                                    const Icon = ICONS[skill.icon] ?? Code;
+                                    return (
+                                        <li
+                                            class:list={[
+                                                "state-layer inline-flex items-center gap-2 rounded-m3-lg border border-outline-variant bg-surface-3 px-3 py-2 text-sm text-on-surface-variant transition",
+                                                accentRing[group.accent],
+                                            ]}
+                                        >
+                                            <Icon class="size-4 shrink-0" />
+                                            {skill.name}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    </Reveal>
+                ))
+            }
+        </div>
+    </div>
+</section>

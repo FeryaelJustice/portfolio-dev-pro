@@ -1,0 +1,36 @@
+---
+import type { Lang } from "@i18n/utils";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+
+const options: { code: Lang; href: string; label: string }[] = [
+    { code: "en", href: "/", label: "EN" },
+    { code: "es", href: "/es/", label: "ES" },
+];
+---
+
+<div
+    class="inline-flex items-center gap-0.5 rounded-m3-xl border border-outline-variant bg-surface-2/70 p-0.5 backdrop-blur"
+    role="group"
+    aria-label="Language"
+>
+    {
+        options.map((o) => (
+            <a
+                href={o.href}
+                aria-current={o.code === lang ? "true" : undefined}
+                class:list={[
+                    "rounded-m3-lg px-2.5 py-1 text-xs font-semibold transition",
+                    o.code === lang
+                        ? "bg-primary text-on-primary"
+                        : "text-on-surface-variant hover:text-on-surface",
+                ]}
+            >
+                {o.label}
+            </a>
+        ))
+    }
+</div>

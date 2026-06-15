@@ -1,0 +1,61 @@
+---
+import { ui } from "@i18n/ui";
+import { profile } from "@data/profile";
+import type { Lang } from "@i18n/utils";
+
+import Github from "@components/icons/Github.astro";
+import Linkedin from "@components/icons/Linkedin.astro";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+const year = new Date().getFullYear();
+
+const links = [
+    { href: profile.socials.github, label: "GitHub", Icon: Github },
+    { href: profile.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
+];
+---
+
+<footer class="border-t border-outline-variant/40">
+    <div
+        class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:flex-row sm:px-8"
+    >
+        <div class="text-center sm:text-left">
+            <a
+                href={lang === "es" ? "/es/" : "/"}
+                class="font-display text-lg font-bold text-on-surface"
+            >
+                FeryaelJustice<span class="text-primary">.dev</span>
+            </a>
+            <p class="mt-1 text-sm text-on-surface-variant">
+                © {year} {profile.name}. {t("footer.rights")}
+            </p>
+            <p class="mt-0.5 text-xs text-on-surface-variant/70">{t("footer.built")}</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            {
+                links.map(({ href, label, Icon }) => (
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener"
+                        aria-label={label}
+                        class="state-layer grid h-10 w-10 place-items-center rounded-m3-lg border border-outline-variant text-on-surface-variant transition hover:text-on-surface"
+                    >
+                        <Icon class="size-5" />
+                    </a>
+                ))
+            }
+            <a
+                href={`mailto:${profile.email}`}
+                class="state-layer rounded-m3-lg border border-outline-variant px-4 py-2 text-sm text-on-surface-variant transition hover:text-on-surface"
+            >
+                {lang === "es" ? "Correo" : "Email"}
+            </a>
+        </div>
+    </div>
+</footer>

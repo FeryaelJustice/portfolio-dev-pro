@@ -1,0 +1,63 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Reveal from "@components/react/Reveal.tsx";
+import { ui } from "@i18n/ui";
+import { profile } from "@data/profile";
+import type { Lang } from "@i18n/utils";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+---
+
+<section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+    <SectionHeader eyebrow={t("about.eyebrow")} title={t("about.title")} />
+
+    <div class="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+        <Reveal client:visible className="order-2 lg:order-1">
+            <div class="relative mx-auto max-w-xs">
+                <div
+                    class="absolute -inset-3 rounded-m3-2xl bg-linear-to-br from-primary/25 via-tertiary/10 to-transparent blur-xl"
+                >
+                </div>
+                <img
+                    src={profile.photo}
+                    alt={profile.name}
+                    width={420}
+                    height={420}
+                    loading="lazy"
+                    class="relative aspect-square w-full rounded-m3-2xl border border-outline-variant object-cover"
+                />
+                <div
+                    class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-m3-xl border border-outline-variant bg-surface-3/95 px-4 py-2 backdrop-blur"
+                >
+                    <p class="whitespace-nowrap text-sm font-medium text-on-surface">
+                        📍 {profile.location[lang]}
+                    </p>
+                </div>
+            </div>
+        </Reveal>
+
+        <Reveal client:visible delay={0.1} className="order-1 space-y-5 lg:order-2">
+            {
+                profile.bio.map((p) => (
+                    <p class="text-pretty text-base leading-relaxed text-on-surface-variant sm:text-lg">
+                        {p[lang]}
+                    </p>
+                ))
+            }
+            <div class="flex flex-wrap gap-3 pt-2">
+                {
+                    profile.stats.map((s) => (
+                        <div class="rounded-m3-lg border border-outline-variant bg-surface-2 px-4 py-3">
+                            <p class="font-display text-2xl font-bold text-primary">{s.value}</p>
+                            <p class="text-xs text-on-surface-variant">{t(s.key)}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        </Reveal>
+    </div>
+</section>

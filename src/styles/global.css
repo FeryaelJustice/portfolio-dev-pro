@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/*
+  Material 3 Expressive - Dark tonal scheme (seed teal #51E4B8)
+  Tokens are exposed to Tailwind v4 via @theme so utilities like
+  `bg-surface`, `text-on-surface`, `border-outline`, `text-primary`,
+  `font-display`, `rounded-m3-lg`… are generated automatically.
+*/
+@theme {
+    /* Brand / key colors */
+    --color-primary: #51e4b8;
+    --color-on-primary: #00382a;
+    --color-primary-container: #00513c;
+    --color-on-primary-container: #74ffdb;
+
+    --color-secondary: #b2ccc3;
+    --color-on-secondary: #1d352f;
+    --color-secondary-container: #344b45;
+    --color-on-secondary-container: #cee9de;
+
+    --color-tertiary: #9fc6ff;
+    --color-on-tertiary: #00315c;
+    --color-tertiary-container: #1f4876;
+    --color-on-tertiary-container: #d3e3ff;
+
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+
+    /* Surfaces / elevation (tonal, not shadow-driven) */
+    --color-bg: #0c1311;
+    --color-surface: #0c1311;
+    --color-surface-dim: #0c1311;
+    --color-surface-bright: #323836;
+    --color-surface-1: #141b19;
+    --color-surface-2: #18201d;
+    --color-surface-3: #1c2421;
+    --color-surface-4: #232b28;
+    --color-surface-5: #2d3531;
+
+    /* Content */
+    --color-on-surface: #dee4e0;
+    --color-on-surface-variant: #bec9c3;
+    --color-outline: #88938e;
+    --color-outline-variant: #3e4a46;
+
+    /* Typography */
+    --font-sans: "Onest Variable", system-ui, sans-serif;
+    --font-display: "Space Grotesk Variable", "Onest Variable", system-ui, sans-serif;
+    --font-mono: "Space Grotesk Variable", ui-monospace, monospace;
+
+    /* M3 corner shape scale */
+    --radius-m3-xs: 4px;
+    --radius-m3-sm: 8px;
+    --radius-m3-md: 12px;
+    --radius-m3-lg: 16px;
+    --radius-m3-xl: 28px;
+    --radius-m3-2xl: 36px;
+
+    /* M3 emphasized easing */
+    --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --ease-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-on-surface);
+        font-family: var(--font-sans);
+        font-synthesis-weight: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+    }
+
+    ::selection {
+        background-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
+        color: var(--color-on-surface);
+    }
+
+    h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    /* Custom scrollbar - subtle M3 tonal */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--color-surface);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-surface-5);
+        border-radius: 9999px;
+        border: 2px solid var(--color-surface);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-outline-variant);
+    }
+}
+
+@layer components {
+    /* M3 state-layer: a primary-tinted overlay that fades in on hover/focus */
+    .state-layer {
+        position: relative;
+        isolation: isolate;
+    }
+    .state-layer::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 200ms var(--ease-standard);
+        pointer-events: none;
+        z-index: -1;
+    }
+    .state-layer:hover::after {
+        opacity: 0.08;
+    }
+    .state-layer:active::after {
+        opacity: 0.12;
+    }
+
+    /* Animated tonal grid backdrop */
+    .grid-backdrop {
+        background-image:
+            linear-gradient(to right, color-mix(in oklab, var(--color-outline-variant) 35%, transparent) 1px, transparent 1px),
+            linear-gradient(to bottom, color-mix(in oklab, var(--color-outline-variant) 35%, transparent) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    }
+}
+
+/* Expressive shape: M3 "cookie" / scalloped blob used for the avatar frame */
+@utility shape-cookie {
+    clip-path: polygon(
+        50% 0%, 63% 6%, 75% 4%, 84% 14%, 95% 20%, 96% 34%, 100% 45%,
+        94% 57%, 96% 70%, 86% 78%, 80% 90%, 66% 91%, 54% 99%, 41% 93%,
+        29% 95%, 20% 85%, 9% 79%, 7% 65%, 2% 54%, 8% 42%, 5% 29%,
+        16% 21%, 21% 9%, 35% 9%, 47% 1%
+    );
+}

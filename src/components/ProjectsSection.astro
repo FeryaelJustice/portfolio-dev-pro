@@ -1,0 +1,25 @@
+---
+import SectionHeader from "@components/SectionHeader.astro";
+import Projects from "@components/react/Projects.tsx";
+import { ui } from "@i18n/ui";
+import type { Lang } from "@i18n/utils";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
+---
+
+<section id="projects" class="scroll-mt-24 border-y border-outline-variant/40 bg-surface-1/40">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
+        <SectionHeader
+            eyebrow={t("projects.eyebrow")}
+            title={t("projects.title")}
+            subtitle={t("projects.subtitle")}
+        />
+        <div class="mt-12">
+            <Projects client:visible lang={lang} />
+        </div>
+    </div>
+</section>
