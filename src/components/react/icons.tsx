@@ -103,3 +103,11 @@ export function FileIcon(props: IconProps) {
         </svg>
     );
 }
+
+export function CheckIcon(props: IconProps) {
+    return (
+        <svg {...base(props)} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+            <path d="M20 6 9 17l-5-5" />
+        </svg>
+    );
+}

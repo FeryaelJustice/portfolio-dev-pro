@@ -11,6 +11,7 @@ import {
     AppleIcon,
     YoutubeIcon,
     ArrowUpRightIcon,
+    CheckIcon,
 } from "./icons";
 
 type Filter = "all" | ProjectCategory;
@@ -119,6 +120,12 @@ function ProjectCard({
                     className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-2 via-transparent to-transparent" />
+                {/* In development badge */}
+                {project.inDevelopment && (
+                    <div className="absolute right-3 top-3 rounded-m3-lg bg-primary/90 p-1.5 text-on-primary">
+                        <CheckIcon className="text-base" />
+                    </div>
+                )}
                 {/* Metric chips */}
                 <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
                     {project.metrics.map((m) => (

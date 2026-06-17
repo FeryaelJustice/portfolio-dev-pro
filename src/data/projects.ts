@@ -7,6 +7,7 @@ export interface Project {
     title: string;
     category: ProjectCategory;
     featured?: boolean;
+    inDevelopment?: boolean;
     description: Localized;
     /** Short highlight chips shown as KPIs on the card. */
     metrics: { value: string; label: Localized }[];
@@ -45,6 +46,7 @@ export const projects: Project[] = [
         title: "Vince Pro Shop - Mobile",
         category: "mobile",
         featured: true,
+        inDevelopment: true,
         description: {
             en: "The mobile companion for Vince Pro Shop, built with Kotlin Multiplatform + Compose Multiplatform for both iOS and Android. Clean architecture with Koin, SQLDelight, Ktor, Room, Datastore, CredentialManager/Keychain, Material 3 and Stripe.",
             es: "La app móvil de Vince Pro Shop, construida con Kotlin Multiplatform + Compose Multiplatform para iOS y Android. Arquitectura limpia con Koin, SQLDelight, Ktor, Room, Datastore, CredentialManager/Keychain, Material 3 y Stripe.",
@@ -57,8 +59,7 @@ export const projects: Project[] = [
         tags: ["Kotlin", "KMP", "Compose", "Ktor", "Stripe"],
         image: "/projects/vinceproshop_mobile.webp",
         links: {
-            store: "https://play.google.com/store/apps",
-            appstore: "https://www.apple.com/es/app-store/",
+            github: "https://github.com/FeryaelJustice/vinceproshopapp",
         },
     },
     {
