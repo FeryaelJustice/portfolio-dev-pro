@@ -15,6 +15,8 @@ import {
 
 type Filter = "all" | ProjectCategory;
 
+const sorted = [...projects].sort((a, b) => a.order - b.order);
+
 export default function Projects({ lang }: { lang: Lang }) {
     const t = (k: keyof (typeof ui)["en"]) => ui[lang][k];
     const reduce = useReducedMotion();
@@ -22,13 +24,14 @@ export default function Projects({ lang }: { lang: Lang }) {
 
     const filters: { id: Filter; label: string }[] = [
         { id: "all", label: t("projects.filter.all") },
+        { id: "monorepo-all-platforms", label: t("projects.filter.monorepo") },
         { id: "mobile", label: t("projects.filter.mobile") },
         { id: "web", label: t("projects.filter.web") },
         { id: "other", label: t("projects.filter.other") },
     ];
 
     const visible = useMemo(
-        () => (filter === "all" ? projects : projects.filter((p) => p.category === filter)),
+        () => (filter === "all" ? sorted : sorted.filter((p) => p.category === filter)),
         [filter],
     );
 
