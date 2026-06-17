@@ -52,6 +52,7 @@ export const ui = {
         "projects.live": "Live",
         "projects.store": "Store",
         "projects.appstore": "App Store",
+        "projects.inDevelopment": "In development",
 
         "experience.eyebrow": "Career",
         "experience.title": "Where I've worked",
@@ -112,6 +113,7 @@ export const ui = {
         "projects.live": "Web",
         "projects.store": "Store",
         "projects.appstore": "App Store",
+        "projects.inDevelopment": "En desarrollo",
 
         "experience.eyebrow": "Trayectoria",
         "experience.title": "Dónde he trabajado",

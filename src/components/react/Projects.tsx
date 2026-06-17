@@ -11,7 +11,6 @@ import {
     AppleIcon,
     YoutubeIcon,
     ArrowUpRightIcon,
-    CheckIcon,
 } from "./icons";
 
 type Filter = "all" | ProjectCategory;
@@ -122,8 +121,8 @@ function ProjectCard({
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-2 via-transparent to-transparent" />
                 {/* In development badge */}
                 {project.inDevelopment && (
-                    <div className="absolute right-3 top-3 rounded-m3-lg bg-primary/90 p-1.5 text-on-primary">
-                        <CheckIcon className="text-base" />
+                    <div className="absolute right-3 top-3 rounded-m3-lg bg-primary px-3 py-1.5 font-medium text-on-primary text-sm">
+                        {t("projects.inDevelopment")}
                     </div>
                 )}
                 {/* Metric chips */}
