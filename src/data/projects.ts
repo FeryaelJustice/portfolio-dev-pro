@@ -146,7 +146,10 @@ export const projects: Project[] = [
         ],
         tags: ["Android", "Kotlin", "Compose", "Firebase"],
         image: "/projects/supersnakegame.webp",
-        links: { github: "https://github.com/FeryaelJustice/SuperSnakeGame" },
+        links: {
+            live: "https://play.google.com/store/apps/details?id=com.feryaeljustice.supersnakegame",
+            github: "https://github.com/FeryaelJustice/SuperSnakeGame",
+        },
     },
     {
         id: "supernewsapp",
