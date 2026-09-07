@@ -186,7 +186,7 @@ export const projects: Project[] = [
         tags: ["React", "Express", "Socket.io", "i18next"],
         image: "/projects/hotelaurademallorca.webp",
         links: {
-            live: "https://darkseagreen-octopus-728733.hostingersite.com/",
+            live: "https://hotel-aura-de-mallorca.vercel.app",
             github: "https://github.com/FeryaelJustice/HotelAuraDeMallorca",
         },
     },
