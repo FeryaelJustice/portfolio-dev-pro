@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 import yaml from "@rollup/plugin-yaml";
 
 // Tailwind v4 is wired through PostCSS (postcss.config.mjs) instead of the
@@ -8,7 +9,12 @@ import yaml from "@rollup/plugin-yaml";
 // https://astro.build/config
 export default defineConfig({
     site: "https://feryaeljustice.dev",
-    integrations: [yaml(), react()],
+
+    integrations: [react()],
+
+    vite: {
+        plugins: [tailwindcss(), yaml()],
+    },
 
     i18n: {
         defaultLocale: "en",
