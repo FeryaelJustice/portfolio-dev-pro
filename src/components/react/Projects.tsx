@@ -114,14 +114,14 @@ function ProjectCard({
             className="group flex h-full flex-col overflow-hidden rounded-m3-xl border border-outline-variant bg-surface-2 transition-colors hover:border-primary/40"
         >
             {/* Image */}
-            <div className="relative aspect-[16/10] overflow-hidden bg-surface-3">
+            <div className="relative aspect-16/10 overflow-hidden bg-surface-3">
                 <img
                     src={project.image}
                     alt={project.title}
                     loading="lazy"
                     className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-2 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface-2 via-transparent to-transparent" />
                 {/* In development badge */}
                 {project.inDevelopment && (
                     <div className="absolute right-3 top-3 rounded-m3-lg bg-primary px-3 py-1.5 font-medium text-on-primary text-sm">

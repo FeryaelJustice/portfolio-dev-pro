@@ -191,6 +191,7 @@ export const projects: Project[] = [
         links: {
             live: "https://hotel-aura-de-mallorca.vercel.app",
             github: "https://github.com/FeryaelJustice/HotelAuraDeMallorca",
+            youtube: "https://www.youtube.com/watch?v=dkXU9haE14U",
         },
     },
     {

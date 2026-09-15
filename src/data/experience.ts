@@ -59,7 +59,7 @@ export const experience: Experience[] = [
             en: "Developed enterprise software in Delphi Seattle for desktop environments, including tooling such as PDFBuilder.",
             es: "Desarrollé software empresarial en Delphi Seattle para entornos de escritorio, incluyendo herramientas como PDFBuilder.",
         },
-        link: "https://www.tec-soft.com",
+        link: "https://www.tec-soft.es/",
         tags: ["Delphi", "Desktop"],
     },
 ];
