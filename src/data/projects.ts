@@ -1,6 +1,10 @@
 import type { Localized } from "./profile";
 
-export type ProjectCategory = "mobile" | "web" | "other" | "monorepo-all-platforms";
+export type ProjectCategory =
+    | "mobile"
+    | "web"
+    | "other"
+    | "monorepo-all-platforms";
 
 export interface Project {
     id: string;
@@ -25,10 +29,50 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        id: "store-frame",
+        title: "Store Frame",
+        category: "web",
+        order: 1,
+        featured: true,
+        inDevelopment: false,
+        description: {
+            en: "A bilingual, browser-based tool for creating Google Play and App Store screenshots. Compose original screenshots with device frames, captions and templates, then export store-ready RGB PNGs in a ZIP. Optional FLUX.2 Klein AI generates decorative backgrounds locally in the browser. No accounts, backend or paid inference APIs.",
+            es: "Herramienta bilingüe que funciona en el navegador para crear capturas de Google Play y App Store. Combina las capturas originales con marcos de dispositivos, textos y plantillas, y exporta PNG RGB listos para las tiendas en un ZIP. La IA opcional FLUX.2 Klein genera fondos decorativos localmente en el navegador. Sin cuentas, backend ni APIs de inferencia de pago.",
+        },
+        metrics: [
+            {
+                value: "Android + iOS",
+                label: { en: "Store formats", es: "Formatos de tienda" },
+            },
+            {
+                value: "1-8",
+                label: { en: "Screenshots per ZIP", es: "Capturas por ZIP" },
+            },
+            {
+                value: "WebGPU",
+                label: { en: "Optional local AI", es: "IA local opcional" },
+            },
+        ],
+        tags: [
+            "Astro",
+            "React",
+            "TypeScript",
+            "Canvas",
+            "WebGPU",
+            "FLUX.2 Klein",
+            "ONNX Runtime",
+        ],
+        image: "/projects/storeframe.webp",
+        links: {
+            live: "https://storeframe.pages.dev/",
+            github: "https://github.com/FeryaelJustice/StoreFrame",
+        },
+    },
+    {
         id: "signal-vault",
         title: "Signal Vault",
         category: "monorepo-all-platforms",
-        order: 1,
+        order: 2,
         featured: true,
         inDevelopment: true,
         description: {
@@ -37,10 +81,23 @@ export const projects: Project[] = [
         },
         metrics: [
             { value: "E2E", label: { en: "Encrypted", es: "Cifrado" } },
-            { value: "Web + Android + iOS", label: { en: "Platforms", es: "Plataformas" } },
+            {
+                value: "Web + Android + iOS",
+                label: { en: "Platforms", es: "Plataformas" },
+            },
             { value: "STOMP", label: { en: "Real-time", es: "Tiempo real" } },
         ],
-        tags: ["Spring Boot", "JPA", "STOMP", "Next.js", "TanStack Query", "Web Crypto", "Kotlin", "Jetpack Compose", "SwiftUI"],
+        tags: [
+            "Spring Boot",
+            "JPA",
+            "STOMP",
+            "Next.js",
+            "TanStack Query",
+            "Web Crypto",
+            "Kotlin",
+            "Jetpack Compose",
+            "SwiftUI",
+        ],
         image: "/projects/signalvault.webp",
         links: {
             github: "https://github.com/FeryaelJustice/signal-vault",
@@ -50,8 +107,9 @@ export const projects: Project[] = [
         id: "vinceproshop-web",
         title: "Vince Pro Shop - Web",
         category: "web",
-        order: 2,
+        order: 3,
         featured: true,
+        inDevelopment: false,
         description: {
             en: "Full-stack e-commerce for a billiards store on Node.js: React (Next.js) + Express, MySQL, VPS on Debian. Secured with JWT and bcrypt, custom admin panel, Stripe checkout, an AI chatbot and ML-powered product suggestions.",
             es: "E-commerce full-stack para una tienda de billar sobre Node.js: React (Next.js) + Express, MySQL y VPS con Debian. Seguridad con JWT y bcrypt, panel de administración propio, pagos con Stripe, chatbot de IA y sugerencias de productos con Machine Learning.",
@@ -69,7 +127,7 @@ export const projects: Project[] = [
         id: "vinceproshop-mobile",
         title: "Vince Pro Shop - Mobile",
         category: "mobile",
-        order: 3,
+        order: 4,
         featured: true,
         inDevelopment: true,
         description: {
@@ -78,7 +136,10 @@ export const projects: Project[] = [
         },
         metrics: [
             { value: "KMP", label: { en: "Shared code", es: "Código común" } },
-            { value: "iOS + Android", label: { en: "Platforms", es: "Plataformas" } },
+            {
+                value: "iOS + Android",
+                label: { en: "Platforms", es: "Plataformas" },
+            },
             { value: "Material 3", label: { en: "Design", es: "Diseño" } },
         ],
         tags: ["Kotlin", "KMP", "Compose", "Ktor", "Stripe"],
@@ -91,16 +152,23 @@ export const projects: Project[] = [
         id: "mirailink",
         title: "MiraiLink",
         category: "mobile",
-        order: 4,
+        order: 5,
         featured: true,
+        inDevelopment: false,
         description: {
             en: "A social app designed for anime and video-game fans, with its own Express.js backend. Native Android built with Jetpack Compose, MVVM, Hilt, Version Catalog and Clean Architecture.",
             es: "App social pensada para fans del anime y los videojuegos, con su propio backend en Express.js. Android nativo con Jetpack Compose, MVVM, Hilt, Version Catalog y Clean Architecture.",
         },
         metrics: [
             { value: "Compose", label: { en: "Native UI", es: "UI nativa" } },
-            { value: "Clean Arch", label: { en: "Architecture", es: "Arquitectura" } },
-            { value: "Express", label: { en: "Own backend", es: "Backend propio" } },
+            {
+                value: "Clean Arch",
+                label: { en: "Architecture", es: "Arquitectura" },
+            },
+            {
+                value: "Express",
+                label: { en: "Own backend", es: "Backend propio" },
+            },
         ],
         tags: ["Android", "Kotlin", "Compose", "Hilt", "Express"],
         image: "/projects/mirailink.webp",
@@ -113,7 +181,9 @@ export const projects: Project[] = [
         id: "compoundinterestmaster",
         title: "Compound Interest Master",
         category: "mobile",
-        order: 5,
+        order: 6,
+        featured: true,
+        inDevelopment: false,
         description: {
             en: "An app that helps you understand and calculate compound interest simply. Built with Jetpack Compose, MVVM, Hilt, Clean Architecture, StateFlow, Coroutines, unit testing, Material 3 and Vico charts.",
             es: "Una app que te ayuda a entender y calcular el interés compuesto de forma sencilla. Hecha con Jetpack Compose, MVVM, Hilt, Clean Architecture, StateFlow, Coroutines, testing unitario, Material 3 y gráficas Vico.",
@@ -134,7 +204,9 @@ export const projects: Project[] = [
         id: "supersnakegame",
         title: "Super Snake Game",
         category: "mobile",
-        order: 6,
+        order: 7,
+        featured: true,
+        inDevelopment: false,
         description: {
             en: "Relive the classic Snake with a 2D style and more. Compete for your high score! Built with Jetpack Compose, MVVM, Hilt, Firebase, Credentials, Google Sign-in and Clean Architecture.",
             es: "Revive el clásico Snake con estilo 2D y más. ¡Compite por tu récord! Hecho con Jetpack Compose, MVVM, Hilt, Firebase, Credentials, Google Sign-in y Clean Architecture.",
@@ -155,13 +227,18 @@ export const projects: Project[] = [
         id: "supernewsapp",
         title: "Super News App",
         category: "mobile",
-        order: 7,
+        order: 8,
+        featured: true,
+        inDevelopment: false,
         description: {
             en: "Your favourite news app, built with Jetpack Compose, MVVM, Hilt, Version Catalog, SOLID principles and Retrofit for API calls.",
             es: "Tu app de noticias favorita, construida con Jetpack Compose, MVVM, Hilt, Version Catalog, principios SOLID y Retrofit para las llamadas a la API.",
         },
         metrics: [
-            { value: "Retrofit", label: { en: "Networking", es: "Networking" } },
+            {
+                value: "Retrofit",
+                label: { en: "Networking", es: "Networking" },
+            },
             { value: "SOLID", label: { en: "Principles", es: "Principios" } },
             { value: "MVVM", label: { en: "Pattern", es: "Patrón" } },
         ],
@@ -176,15 +253,26 @@ export const projects: Project[] = [
         id: "hotelaurademallorca",
         title: "Hotel Aura de Mallorca",
         category: "web",
-        order: 8,
+        order: 9,
+        featured: true,
+        inDevelopment: false,
         description: {
             en: "A hotel website (React + Express) with a weather API that decides booking availability based on local conditions. Uses Axios, QR codes, React Calendar, i18next, Google reCAPTCHA, Socket.io, cryptography, Nodemailer and Helmet.",
             es: "Web de hotel (React + Express) con una API meteorológica que decide la disponibilidad de reserva según el clima local. Usa Axios, códigos QR, React Calendar, i18next, Google reCAPTCHA, Socket.io, criptografía, Nodemailer y Helmet.",
         },
         metrics: [
-            { value: "Weather API", label: { en: "Booking logic", es: "Lógica reserva" } },
-            { value: "i18next", label: { en: "Multilingual", es: "Multilingüe" } },
-            { value: "Socket.io", label: { en: "Realtime", es: "Tiempo real" } },
+            {
+                value: "Weather API",
+                label: { en: "Booking logic", es: "Lógica reserva" },
+            },
+            {
+                value: "i18next",
+                label: { en: "Multilingual", es: "Multilingüe" },
+            },
+            {
+                value: "Socket.io",
+                label: { en: "Realtime", es: "Tiempo real" },
+            },
         ],
         tags: ["React", "Express", "Socket.io", "i18next"],
         image: "/projects/hotelaurademallorca.webp",
@@ -198,7 +286,9 @@ export const projects: Project[] = [
         id: "feryaeldev",
         title: "Feryael Dev",
         category: "other",
-        order: 9,
+        order: 10,
+        featured: true,
+        inDevelopment: false,
         description: {
             en: "My programming YouTube channel, showcasing mobile projects and knowledge across different Android topics.",
             es: "Mi canal de YouTube de programación, mostrando proyectos móviles y conocimiento sobre diferentes temas de Android.",
